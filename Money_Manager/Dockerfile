@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY target/Money_manager-0.0.1-SNAPSHOT.jar app.jar
+COPY target/Money_Manager-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
