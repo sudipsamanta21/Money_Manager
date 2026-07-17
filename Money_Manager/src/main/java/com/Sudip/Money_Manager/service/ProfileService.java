@@ -44,8 +44,61 @@ public class ProfileService {
         newProfile = profileRepository.save(newProfile);
         String activationLink =
                 activationURL+"/api/v1.0/activate?token=" + newProfile.getActivationToken();
-        String subject = "Activate your Money Manager account";
-        String body = "Please click the following link to activate your account: " + activationLink;
+        String subject = "Activate your Money Manager Account";
+
+        String body = String.format("""
+        <!DOCTYPE html>
+            <html>
+                <body style="margin:0;padding:40px;background:#f4f6f8;font-family:Arial,sans-serif;">
+
+               <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:12px;padding:40px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1);">
+
+               <h1 style="color:#2c3e50;">Money Manager</h1>
+
+               <h2 style="color:#333;">Welcome, %s 👋</h2>
+
+               <p style="font-size:16px;color:#555;">
+                   Thank you for registering.
+                   Please click the button below to activate your account.
+               </p>
+
+               <a href="%s"
+                   style="
+                   display:inline-block;
+                   margin:30px 0;
+                   padding:15px 35px;
+                   background:#4CAF50;
+                   color:#ffffff;
+                   text-decoration:none;
+                   font-size:18px;
+                   font-weight:bold;
+                   border-radius:8px;">
+                   Activate Account
+               </a>
+
+               <p style="font-size:14px;color:#777;">
+                  If the button doesn't work, copy and paste this link into your browser:
+               </p>
+
+               <p style="word-break:break-all;color:#2196F3;">
+               %s
+               </p>
+
+               <hr>
+
+               <p style="font-size:13px;color:#999;">
+               © 2026 Money Manager. All rights reserved.
+               </p>
+
+             </div>
+
+            </body>
+        </html>
+        """,
+                newProfile.getFullName(),
+                activationLink,
+                activationLink);
+
         try {
             emailService.sendEmail(newProfile.getEmail(), subject, body);
         } catch (Exception e) {
@@ -53,6 +106,10 @@ public class ProfileService {
         }
         return toDTO(newProfile);
     }
+
+
+
+
 
     public ProfileEntity toEntity(ProfileDTO profileDTO) {
 
