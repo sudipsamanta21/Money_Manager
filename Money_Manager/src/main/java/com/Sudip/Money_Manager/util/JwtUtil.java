@@ -18,16 +18,6 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration}")
-    private long expiration;
-
-
-
-//    private SecretKey getSigningKey() {
-//        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-//    }
-
-
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
@@ -37,7 +27,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 hours
                 .signWith(getSigningKey())
                 .compact();
     }
