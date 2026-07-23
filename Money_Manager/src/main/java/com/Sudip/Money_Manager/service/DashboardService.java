@@ -3,7 +3,7 @@ package com.Sudip.Money_Manager.service;
 
 import com.Sudip.Money_Manager.dataTransferObject.ExpenseDTO;
 import com.Sudip.Money_Manager.dataTransferObject.IncomeDTO;
-import com.Sudip.Money_Manager.dataTransferObject.ResentTransactionDTO;
+import com.Sudip.Money_Manager.dataTransferObject.RecentTransactionDTO;
 import com.Sudip.Money_Manager.entity.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +31,8 @@ public class DashboardService {
          List<IncomeDTO> latestIncomes = incomeService.getLatest5IncomeForCurrentUser();
          List<ExpenseDTO> latestExpenses= expenseService.getLatest5ExpenseForCurrentUser();
 
-         List<ResentTransactionDTO>resentTransaction = concat(latestIncomes.stream().map(incomeDTO ->
-                 ResentTransactionDTO.builder()
+         List<RecentTransactionDTO>recentTransactions = concat(latestIncomes.stream().map(incomeDTO ->
+                 RecentTransactionDTO.builder()
                          .id(incomeDTO.getId())
                          .profileId(profileEntity.getId())
                          .icon(incomeDTO.getIcon())
@@ -44,7 +44,7 @@ public class DashboardService {
                          .type("income")
                          .build()),
                  latestExpenses.stream().map(expenseDTO ->
-                      ResentTransactionDTO.builder()
+                      RecentTransactionDTO.builder()
                                  .id(expenseDTO.getId())
                                  .profileId(profileEntity.getId())
                                  .icon(expenseDTO.getIcon())
@@ -68,8 +68,8 @@ public class DashboardService {
         returnValue.put("totalIncome", incomeService.getTotalIncomeForCurrentUser());
         returnValue.put("totalExpense", expenseService.getTotalExpenseForCurrentUser());
         returnValue.put("recent5Expenses", latestExpenses);
-        returnValue.put("recent5Income", latestIncomes);
-        returnValue.put("recentTransaction", resentTransaction);
+        returnValue.put("recent5Incomes", latestIncomes);
+        returnValue.put("recentTransactions", recentTransactions);
         return  returnValue;
     }
 }

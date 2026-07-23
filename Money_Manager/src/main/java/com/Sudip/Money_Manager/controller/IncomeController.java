@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin("${money.manager.frontend.url}")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/incomes")
@@ -36,4 +38,7 @@ public class IncomeController {
         incomeService.deleteIncome(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
 }

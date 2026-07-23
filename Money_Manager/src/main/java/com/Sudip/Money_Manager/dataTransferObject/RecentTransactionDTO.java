@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResentTransactionDTO {
+public class RecentTransactionDTO {
 
     private Long id;
     private  Long profileId;

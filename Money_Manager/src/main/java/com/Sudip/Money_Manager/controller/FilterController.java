@@ -9,14 +9,13 @@ import com.Sudip.Money_Manager.service.IncomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
+
+@CrossOrigin("${money.manager.frontend.url}")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/filter")
@@ -27,8 +26,13 @@ public class FilterController {
 
     @PostMapping
     public ResponseEntity<?> filterTransaction(@RequestBody FilterDTO filterDTO){
-        LocalDate startDate = filterDTO.getStartDate() != null ? filterDTO.getStartDate() : LocalDate.MIN;
-        LocalDate endDate = filterDTO.getEndDate() != null ? filterDTO.getEndDate() : LocalDate.now();
+        LocalDate startDate = filterDTO.getStartDate() != null
+                ? filterDTO.getStartDate()
+                : LocalDate.of(1970, 1, 1);
+
+        LocalDate endDate = filterDTO.getEndDate() != null
+                ? filterDTO.getEndDate()
+                : LocalDate.now();
 
         String keyword = filterDTO.getKeyword() == null ? "" : filterDTO.getKeyword().trim();
         String sortField = filterDTO.getSortField() != null ? filterDTO.getSortField(): "date";

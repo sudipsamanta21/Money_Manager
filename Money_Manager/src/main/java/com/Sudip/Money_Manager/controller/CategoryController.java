@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("${money.manager.frontend.url}")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categories")
@@ -44,4 +45,6 @@ public class CategoryController {
         CategoryDTO updatedCategory = categoryService.updateCategory(categoryId, categoryDTO);
         return ResponseEntity.ok(updatedCategory);
     }
+
+
 }
